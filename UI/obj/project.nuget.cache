@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "R1tiaE1YZ2s=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\PinPoint.UI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\poste\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.36\\microsoft.windowsdesktop.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\poste\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.36\\microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\poste\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.36\\microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\poste\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.36\\microsoft.netcore.app.host.win-x64.6.0.36.nupkg.sha512"
+  ],
+  "logs": []
+}

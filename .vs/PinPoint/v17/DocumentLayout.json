@@ -1,0 +1,249 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\poste\\Documents\\PinPoint\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\views\\settingsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\views\\settingsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\views\\exportdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\views\\exportdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\views\\designerview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\views\\designerview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\views\\communityview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\views\\communityview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\views\\aboutview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\views\\aboutview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\viewmodels\\settingsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\viewmodels\\settingsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\files\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\files\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\services\\fileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\services\\fileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\services\\communityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\services\\communityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\viewmodels\\communityviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\viewmodels\\communityviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\ui\\viewmodels\\designerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:ui\\viewmodels\\designerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|c:\\users\\poste\\documents\\pinpoint\\overlayengine\\bin\\debug\\overlayengine.dll||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{B1C2D3E4-F5A6-2345-6789-ABCDEF012345}|UI\\PinPoint.UI.csproj|solutionrelative:overlayengine\\bin\\debug\\overlayengine.dll||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\App.xaml",
+              "RelativeDocumentMoniker": "UI\\App.xaml",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\App.xaml",
+              "RelativeToolTip": "UI\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T16:20:10.524Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SettingsView.xaml",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\SettingsView.xaml",
+              "RelativeDocumentMoniker": "UI\\Views\\SettingsView.xaml",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\SettingsView.xaml",
+              "RelativeToolTip": "UI\\Views\\SettingsView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T16:19:20.781Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "UI\\Views\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\MainWindow.xaml",
+              "RelativeToolTip": "UI\\Views\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T16:19:19.364Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ExportDialog.xaml",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\ExportDialog.xaml",
+              "RelativeDocumentMoniker": "UI\\Views\\ExportDialog.xaml",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\ExportDialog.xaml",
+              "RelativeToolTip": "UI\\Views\\ExportDialog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T16:19:18.674Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DesignerView.xaml",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\DesignerView.xaml",
+              "RelativeDocumentMoniker": "UI\\Views\\DesignerView.xaml",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\DesignerView.xaml",
+              "RelativeToolTip": "UI\\Views\\DesignerView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T16:19:14.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CommunityView.xaml",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\CommunityView.xaml",
+              "RelativeDocumentMoniker": "UI\\Views\\CommunityView.xaml",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\CommunityView.xaml",
+              "RelativeToolTip": "UI\\Views\\CommunityView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T16:19:11.523Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AboutView.xaml",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\AboutView.xaml",
+              "RelativeDocumentMoniker": "UI\\Views\\AboutView.xaml",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Views\\AboutView.xaml",
+              "RelativeToolTip": "UI\\Views\\AboutView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T16:18:59.719Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SettingsViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\ViewModels\\SettingsViewModel.cs",
+              "RelativeDocumentMoniker": "UI\\ViewModels\\SettingsViewModel.cs",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\ViewModels\\SettingsViewModel.cs",
+              "RelativeToolTip": "UI\\ViewModels\\SettingsViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T16:18:57.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\files\\App.xaml.cs",
+              "RelativeDocumentMoniker": "UI\\files\\App.xaml.cs",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\files\\App.xaml.cs",
+              "RelativeToolTip": "UI\\files\\App.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T16:18:55.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "FileService.cs",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Services\\FileService.cs",
+              "RelativeDocumentMoniker": "UI\\Services\\FileService.cs",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Services\\FileService.cs",
+              "RelativeToolTip": "UI\\Services\\FileService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T16:18:54.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CommunityService.cs",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Services\\CommunityService.cs",
+              "RelativeDocumentMoniker": "UI\\Services\\CommunityService.cs",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\Services\\CommunityService.cs",
+              "RelativeToolTip": "UI\\Services\\CommunityService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T16:18:53.12Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CommunityViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\ViewModels\\CommunityViewModel.cs",
+              "RelativeDocumentMoniker": "UI\\ViewModels\\CommunityViewModel.cs",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\ViewModels\\CommunityViewModel.cs",
+              "RelativeToolTip": "UI\\ViewModels\\CommunityViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T16:18:50.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DesignerViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\ViewModels\\DesignerViewModel.cs",
+              "RelativeDocumentMoniker": "UI\\ViewModels\\DesignerViewModel.cs",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\UI\\ViewModels\\DesignerViewModel.cs",
+              "RelativeToolTip": "UI\\ViewModels\\DesignerViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T16:18:49.298Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "OverlayEngine.dll",
+              "DocumentMoniker": "C:\\Users\\poste\\Documents\\PinPoint\\OverlayEngine\\bin\\Debug\\OverlayEngine.dll",
+              "RelativeDocumentMoniker": "OverlayEngine\\bin\\Debug\\OverlayEngine.dll",
+              "ToolTip": "C:\\Users\\poste\\Documents\\PinPoint\\OverlayEngine\\bin\\Debug\\OverlayEngine.dll",
+              "RelativeToolTip": "OverlayEngine\\bin\\Debug\\OverlayEngine.dll",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001697|",
+              "WhenOpened": "2025-04-17T16:15:28.757Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
