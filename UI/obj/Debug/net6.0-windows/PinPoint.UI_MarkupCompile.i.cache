@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\poste\Documents\PinPoint\UI\obj\Debug\net6.0-windows\
+C:\Users\User\Source\Repos\PinPointApp\UI\obj\Debug\net6.0-windows\
 PinPoint.UI
 none
 false
-TRACE;DEBUG;NET;NET6_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-C:\Users\poste\Documents\PinPoint\UI\App.xaml
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+C:\Users\User\Source\Repos\PinPointApp\UI\App.xaml
 7-1399346394
 1-1622066715
 201891656597
-2031638383535
+203155564505
 Views\AboutView.xaml;Views\CommunityView.xaml;Views\DesignerView.xaml;Views\ExportDialog.xaml;Views\MainView.xaml;Views\MainWindow.xaml;Views\SettingsView.xaml;
 
 False

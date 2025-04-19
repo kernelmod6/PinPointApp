@@ -1,4 +1,5 @@
 using System.Windows;
+using PinPoint.UI.Services;
 
 namespace PinPoint.UI.Views
 {
@@ -8,15 +9,15 @@ namespace PinPoint.UI.Views
         {
             InitializeComponent();
         }
-        
+
         private void ShowOverlay_Checked(object sender, RoutedEventArgs e)
         {
-            Services.OverlayService.ShowOverlay(true);
+            OverlayService.ShowOverlay(true);
         }
-        
+
         private void ShowOverlay_Unchecked(object sender, RoutedEventArgs e)
         {
-            Services.OverlayService.ShowOverlay(false);
+            OverlayService.ShowOverlay(false);
         }
     }
-} 
+}

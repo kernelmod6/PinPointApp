@@ -99,16 +99,15 @@ namespace PinPoint.UI.Views
             CrosshairLeft = CrosshairPreview.ActualWidth / 2;
             CrosshairTop = CrosshairPreview.ActualHeight / 2;
         }
-        
+
         private void StyleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (StyleComboBox.SelectedIndex >= 0)
+            if (StyleComboBox.SelectedItem is CrosshairStyle selectedStyle)
             {
-                _crosshairModel.Style = (CrosshairStyle)StyleComboBox.SelectedIndex;
+                _crosshairModel.Style = selectedStyle;
                 UpdateCrosshairPreview();
             }
         }
-        
         private void SizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (_crosshairModel != null)
@@ -167,16 +166,16 @@ namespace PinPoint.UI.Views
         private void ApplySettings()
         {
             // Apply settings to the actual overlay
-            OverlayService.SetCrosshairColor(
+            OverlayService.SetCrosshairColorWrapper(
                 (float)_crosshairModel.Color.R / 255.0f,
                 (float)_crosshairModel.Color.G / 255.0f,
                 (float)_crosshairModel.Color.B / 255.0f,
                 (float)_crosshairModel.Opacity
             );
             
-            OverlayService.SetCrosshairSize((float)_crosshairModel.Size);
-            OverlayService.SetCrosshairThickness((float)_crosshairModel.Thickness);
-            OverlayService.SetCrosshairStyle((int)_crosshairModel.Style);
+            OverlayService.SetCrosshairSizeWrapper((float)_crosshairModel.Size);
+            OverlayService.SetCrosshairThicknessWrapper((float)_crosshairModel.Thickness);
+            OverlayService.SetCrosshairStyleWrapper((int)_crosshairModel.Style);
         }
         
         private void UpdateCrosshairPreview()
