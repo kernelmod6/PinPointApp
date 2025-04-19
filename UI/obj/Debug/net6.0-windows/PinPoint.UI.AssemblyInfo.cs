@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PinPoint.UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+11953da3ed4581b2140e6ff139c7ece87f6b41f6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02a88b9394800d5d5c4a488c981cde82cc9aa635")]
 [assembly: System.Reflection.AssemblyProductAttribute("PinPoint.UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PinPoint.UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,6 +1,6 @@
 is_global = true
 build_property.ApplicationManifest = 
-build_property.StartupObject = 
+build_property.StartupObject = PinPoint.UI.App
 build_property.ApplicationDefaultFont = 
 build_property.ApplicationHighDpiMode = 
 build_property.ApplicationUseCompatibleTextRendering = 
@@ -14,7 +14,7 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = PinPoint.UI
-build_property.ProjectDir = C:\Users\poste\Documents\PinPoint\UI\
+build_property.ProjectDir = C:\Users\User\Source\Repos\PinPointApp\UI\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false
