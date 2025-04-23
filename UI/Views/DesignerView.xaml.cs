@@ -37,12 +37,6 @@ namespace PinPoint.UI.Views
             DependencyProperty.Register("CrosshairTop", typeof(double), typeof(DesignerView), 
                 new PropertyMetadata(0.0));
         
-        public SolidColorBrush CrosshairColor
-        {
-            get { return (SolidColorBrush)GetValue(CrosshairColorProperty); }
-            set { SetValue(CrosshairColorProperty, value); }
-        }
-        
         public double CrosshairSize
         {
             get { return (double)GetValue(CrosshairSizeProperty); }
