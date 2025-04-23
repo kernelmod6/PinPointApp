@@ -3,51 +3,154 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PinPoint.UI.Views"
+        xmlns:local="clr-namespace:PinPoint.UI"
+        xmlns:views="clr-namespace:PinPoint.UI.Views"
+        xmlns:viewmodels="clr-namespace:PinPoint.UI.ViewModels"
+        xmlns:vm="clr-namespace:PinPoint.UI.ViewModels"
+        xmlns:automation="clr-namespace:System.Windows.Automation;assembly=PresentationCore"
         mc:Ignorable="d"
-        Title="PinPoint" Height="450" Width="800"
-        Background="#F5F5F5"
-        WindowStartupLocation="CenterScreen">
+        Title="PinPoint"
+        Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource PrimaryBackgroundBrush}"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        BorderThickness="0"
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown">
+    
+    <!-- Comment out any DataContext assignments like: -->
+    <!-- <Window.DataContext> -->
+    <!--     <viewmodels:MainViewModel/> -->
+    <!-- </Window.DataContext> -->
+
+    <!-- And comment out any references to missing view classes like: -->
+    <!-- <views:DesignerView x:Name="DesignerView" /> -->
+    <!-- <views:SettingsView x:Name="SettingsView" /> -->
+    <!-- <views:AboutView x:Name="AboutView" /> -->
+    
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <!-- Header -->
-        <Border Grid.Row="0" Background="#333333" Padding="15">
-            <TextBlock Text="PinPoint Crosshair" Foreground="White" FontSize="20" FontWeight="Bold"/>
-        </Border>
-        
-        <!-- Main Content -->
-        <TabControl Grid.Row="1" Margin="5">
-            <TabItem Header="Designer">
-                <local:DesignerView x:Name="DesignerView"/>
-            </TabItem>
-            <TabItem Header="Settings">
-                <local:SettingsView x:Name="SettingsView"/>
-            </TabItem>
-            <TabItem Header="About">
-                <local:AboutView x:Name="AboutView"/>
-            </TabItem>
-        </TabControl>
-        
-        <!-- Footer -->
-        <Border Grid.Row="2" Background="#EEEEEE" Padding="10">
+        <!-- Enhanced Title Bar with Navigation -->
+        <Border Grid.Row="0" Background="{StaticResource HeaderGradient}" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="0,0,0,1" 
+                MouseLeftButtonDown="Border_MouseLeftButtonDown">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 
-                <TextBlock Grid.Column="0" Text="PinPoint v1.0" Foreground="#333333"/>
+                <!-- Logo & App Name -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="20,0,20,0">
+                    <TextBlock Text="PinPoint" FontWeight="Bold" VerticalAlignment="Center" FontSize="16"
+                              Foreground="{StaticResource AccentBrush}"/>
+                </StackPanel>
                 
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <CheckBox Content="Show Overlay" IsChecked="True" VerticalAlignment="Center"
-                              Checked="ShowOverlay_Checked" Unchecked="ShowOverlay_Unchecked"/>
+                <!-- Navigation in Title Bar -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0">
+                    <RadioButton Content="DESIGNER" GroupName="Navigation" IsChecked="True"
+                                Style="{StaticResource TitleBarNavButton}"
+                                Click="NavigationButton_Click" Tag="Designer"/>
+                    <RadioButton Content="SETTINGS" GroupName="Navigation"
+                                Style="{StaticResource TitleBarNavButton}"
+                                Click="NavigationButton_Click" Tag="Settings"/>
+                    <RadioButton Content="ABOUT" GroupName="Navigation"
+                                Style="{StaticResource TitleBarNavButton}"
+                                Click="NavigationButton_Click" Tag="About"/>
+                </StackPanel>
+                
+                <!-- Window Controls -->
+                <StackPanel Grid.Column="3" Orientation="Horizontal">
+                    <Button x:Name="MinimizeButton" Click="MinimizeButton_Click" Width="46" Height="50"
+                            Background="Transparent" BorderThickness="0">
+                        <Path Data="M 0,0 L 10,0" Stroke="{StaticResource TextPrimaryBrush}" StrokeThickness="1.5"/>
+                    </Button>
+                    <Button x:Name="MaximizeButton" Click="MaximizeButton_Click" Width="46" Height="50"
+                            Background="Transparent" BorderThickness="0">
+                        <Path Data="M 0,0 L 10,0 L 10,10 L 0,10 Z" Stroke="{StaticResource TextPrimaryBrush}" 
+                              StrokeThickness="1.5" Fill="Transparent"/>
+                    </Button>
+                    <Button x:Name="CloseButton" Click="CloseButton_Click" Width="46" Height="50"
+                            Background="Transparent" BorderThickness="0">
+                        <Path Data="M 0,0 L 10,10 M 0,10 L 10,0" Stroke="{StaticResource TextPrimaryBrush}" 
+                              StrokeThickness="1.5"/>
+                    </Button>
                 </StackPanel>
             </Grid>
         </Border>
+        
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Action Panel (replaces Navigation Panel) -->
+            <Border Grid.Column="0" Background="{StaticResource SecondaryBackgroundBrush}" 
+                    BorderBrush="{StaticResource BorderBrush}" 
+                    BorderThickness="0,0,1,0">
+                <StackPanel Margin="15">
+                    <TextBlock Text="ACTIONS" FontWeight="SemiBold" Margin="10,15,10,20" 
+                              Foreground="{StaticResource TextSecondaryBrush}" FontSize="14"/>
+                    
+                    <Button Content="Toggle Overlay" 
+                            HorizontalAlignment="Stretch" 
+                            Margin="10,5,10,5"
+                            Style="{StaticResource AccentButton}"/>
+                    
+                    <Button Content="Save Configuration" 
+                            HorizontalAlignment="Stretch" 
+                            Margin="10,10,10,5"
+                            Style="{StaticResource ActionButton}"/>
+                    
+                    <Button Content="Load Configuration" 
+                            HorizontalAlignment="Stretch" 
+                            Margin="10,5,10,5"
+                            Style="{StaticResource ActionButton}"/>
+                    
+                    <Button Content="Reset Settings" 
+                            HorizontalAlignment="Stretch" 
+                            Margin="10,5,10,5"
+                            Style="{StaticResource ActionButton}"/>
+                    
+                    <Separator Margin="10,20,10,20" Background="{StaticResource BorderBrush}" Height="1"/>
+                    
+                    <TextBlock Text="INFO" FontWeight="SemiBold" Margin="10,0,10,15" 
+                              Foreground="{StaticResource TextSecondaryBrush}" FontSize="14"/>
+                    
+                    <Button Content="User Guide" 
+                            HorizontalAlignment="Stretch" 
+                            Margin="10,5,10,5"
+                            Style="{StaticResource ActionButton}"/>
+                    
+                    <Button Content="Check for Updates" 
+                            HorizontalAlignment="Stretch" 
+                            Margin="10,5,10,5"
+                            Style="{StaticResource ActionButton}"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Content area -->
+            <Grid Grid.Column="1">
+                <ContentControl x:Name="designerViewHost">
+                    <TextBlock Text="Designer View" />
+                </ContentControl>
+                <ContentControl x:Name="settingsViewHost" Visibility="Collapsed">
+                    <TextBlock Text="Settings View" />
+                </ContentControl>
+                <ContentControl x:Name="aboutViewHost" Visibility="Collapsed">
+                    <TextBlock Text="About View" />
+                </ContentControl>
+            </Grid>
+        </Grid>
     </Grid>
 </Window> 

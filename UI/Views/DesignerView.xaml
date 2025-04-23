@@ -4,92 +4,507 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PinPoint.UI.Views"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    <Grid Margin="10">
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Grid Margin="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="340"/>
         </Grid.ColumnDefinitions>
         
         <!-- Crosshair Preview -->
-        <Border Grid.Column="0" Background="#333333" Margin="5">
-            <Canvas x:Name="CrosshairPreview" ClipToBounds="True">
-                <!-- Crosshair is drawn here based on settings -->
-                <Path x:Name="CrosshairPath" Stroke="{Binding CrosshairColor}" StrokeThickness="{Binding CrosshairThickness}" 
-                      Canvas.Left="{Binding CrosshairLeft}" Canvas.Top="{Binding CrosshairTop}">
-                    <Path.Data>
-                        <GeometryGroup>
-                            <LineGeometry StartPoint="-10,0" EndPoint="10,0"/>
-                            <LineGeometry StartPoint="0,-10" EndPoint="0,10"/>
-                        </GeometryGroup>
-                    </Path.Data>
-                </Path>
-            </Canvas>
+        <Border Grid.Column="0" 
+                Background="{StaticResource SecondaryBackgroundBrush}" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="1" 
+                Margin="0,0,15,0" 
+                CornerRadius="8">
+            
+            <Grid>
+                <Line X1="0" Y1="0" X2="1000" Y2="0" 
+                      Stretch="Fill" VerticalAlignment="Center" 
+                      Stroke="#30FFFFFF" StrokeThickness="1" 
+                      StrokeDashArray="4,2"/>
+                
+                <Line X1="0" Y1="0" X2="0" Y2="1000" 
+                      Stretch="Fill" HorizontalAlignment="Center" 
+                      Stroke="#30FFFFFF" StrokeThickness="1" 
+                      StrokeDashArray="4,2"/>
+                
+                <Canvas x:Name="CrosshairPreview" 
+                        Width="400" Height="400" 
+                        ClipToBounds="True" 
+                        SizeChanged="CrosshairPreview_SizeChanged">
+                    <Path x:Name="CrosshairPath" 
+                          Stroke="{StaticResource AccentBrush}" 
+                          StrokeThickness="2"/>
+                </Canvas>
+            </Grid>
         </Border>
         
-        <!-- Settings Panel -->
-        <Border Grid.Column="1" Background="White" Margin="5" Padding="10" BorderBrush="#DDDDDD" BorderThickness="1">
-            <ScrollViewer>
-                <StackPanel>
-                    <TextBlock Text="Crosshair Style" FontWeight="Bold" Margin="0,10,0,5"/>
-                    <ComboBox x:Name="StyleComboBox" SelectionChanged="StyleComboBox_SelectionChanged">
-                        <ComboBoxItem Content="Cross" IsSelected="True"/>
-                        <ComboBoxItem Content="Dot"/>
-                        <ComboBoxItem Content="Circle"/>
+        <!-- Controls Panel -->
+        <Border Grid.Column="1" 
+                Background="{StaticResource SecondaryBackgroundBrush}" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="1" 
+                CornerRadius="8">
+            
+            <StackPanel Margin="25">
+                <TextBlock Text="CROSSHAIR DESIGNER" 
+                           FontWeight="Bold" 
+                           FontSize="20" 
+                           Foreground="{StaticResource AccentBrush}"
+                           Margin="0,0,0,25"/>
+                
+                <!-- Style section without the separate preview panel -->
+                <Grid Margin="0,0,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/> <!-- Title -->
+                        <RowDefinition Height="Auto"/> <!-- Dropdown -->
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Heading with consistent spacing -->
+                    <TextBlock Grid.Row="0" 
+                               Text="STYLE" 
+                               FontWeight="SemiBold" 
+                               Margin="0,0,0,12" 
+                               FontSize="14"/>
+                    
+                    <!-- Custom ComboBox Container -->
+                    <Border Grid.Row="1"
+                            x:Name="StyleDropdownBorder"
+                            Width="200"
+                            Height="42"
+                            Background="#262626"
+                            BorderBrush="#3498db"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Cursor="Hand"
+                            MouseLeftButtonDown="StyleDropdownBorder_MouseLeftButtonDown">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="42"/> <!-- Fixed width for icon -->
+                                <ColumnDefinition Width="*"/>  <!-- Text takes remaining space -->
+                                <ColumnDefinition Width="42"/> <!-- Fixed width for arrow -->
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Currently selected style preview -->
+                            <Border Grid.Column="0"
+                                    Width="34" 
+                                    Height="34"
+                                    Background="#1A1A1A"
+                                    CornerRadius="3"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <Canvas x:Name="SelectedStyleIcon" 
+                                        Width="20" 
+                                        Height="20" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center">
+                                    <Path x:Name="SelectedStylePath" 
+                                          Stroke="White" 
+                                          StrokeThickness="1.5">
+                                        <Path.Data>
+                                            <GeometryGroup>
+                                                <LineGeometry StartPoint="10,0" EndPoint="10,20"/>
+                                                <LineGeometry StartPoint="0,10" EndPoint="20,10"/>
+                                            </GeometryGroup>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                            </Border>
+                            
+                            <!-- Currently selected style name -->
+                            <TextBlock x:Name="SelectedStyleText"
+                                       Grid.Column="1"
+                                       Text="Standard"
+                                       VerticalAlignment="Center"
+                                       Margin="8,0,0,0"
+                                       Foreground="White"
+                                       FontWeight="Medium"/>
+                            
+                            <!-- Dropdown arrow -->
+                            <Path Grid.Column="2"
+                                  Data="M0,0 L6,6 L12,0"
+                                  Stroke="#3498db"
+                                  StrokeThickness="2"
+                                  Width="12"
+                                  Height="6"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- The actual hidden ComboBox that we'll use for functionality later -->
+                    <ComboBox x:Name="StyleComboBox"
+                              Grid.Row="1"
+                              Visibility="Collapsed">
+                        <ComboBoxItem Content="Standard" IsSelected="True" Tag="Standard"/>
+                        <ComboBoxItem Content="Dot" Tag="Dot"/>
+                        <ComboBoxItem Content="Circle" Tag="Circle"/>
+                        <ComboBoxItem Content="Tactical" Tag="Tactical"/>
                     </ComboBox>
                     
-                    <TextBlock Text="Color" FontWeight="Bold" Margin="0,15,0,5"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Border Grid.Column="0" Height="30" Background="{Binding CrosshairColor}" Margin="0,0,5,0" BorderBrush="Black" BorderThickness="1"/>
-                        <Button Grid.Column="1" Content="Choose..." Click="ChooseColor_Click"/>
-                    </Grid>
-                    
-                    <TextBlock Text="Size" FontWeight="Bold" Margin="0,15,0,5"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Slider Grid.Column="0" x:Name="SizeSlider" Minimum="5" Maximum="50" Value="{Binding CrosshairSize}"
-                                ValueChanged="SizeSlider_ValueChanged"/>
-                        <TextBlock Grid.Column="1" Width="30" Text="{Binding ElementName=SizeSlider, Path=Value, StringFormat={}{0:0}}" TextAlignment="Right"/>
-                    </Grid>
-                    
-                    <TextBlock Text="Thickness" FontWeight="Bold" Margin="0,15,0,5"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Slider Grid.Column="0" x:Name="ThicknessSlider" Minimum="1" Maximum="10" Value="{Binding CrosshairThickness}"
-                                ValueChanged="ThicknessSlider_ValueChanged"/>
-                        <TextBlock Grid.Column="1" Width="30" Text="{Binding ElementName=ThicknessSlider, Path=Value, StringFormat={}{0:0.0}}" TextAlignment="Right"/>
-                    </Grid>
-                    
-                    <TextBlock Text="Opacity" FontWeight="Bold" Margin="0,15,0,5"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Slider Grid.Column="0" x:Name="OpacitySlider" Minimum="0" Maximum="1" Value="{Binding CrosshairOpacity}" 
-                                SmallChange="0.05" LargeChange="0.2" ValueChanged="OpacitySlider_ValueChanged"/>
-                        <TextBlock Grid.Column="1" Width="30" Text="{Binding ElementName=OpacitySlider, Path=Value, StringFormat={}{0:P0}}" TextAlignment="Right"/>
-                    </Grid>
-                    
-                    <Button Content="Apply Settings" Margin="0,20,0,0" Click="ApplySettings_Click" HorizontalAlignment="Right"/>
-                </StackPanel>
-            </ScrollViewer>
+                    <!-- Style options popup -->
+                    <Popup x:Name="StylesPopup" 
+                           PlacementTarget="{Binding ElementName=StyleDropdownBorder}"
+                           Placement="Bottom"
+                           AllowsTransparency="True"
+                           StaysOpen="False"
+                           Width="200">
+                        <Border Background="#262626"
+                                BorderBrush="#3498db"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                Margin="0,2,0,0">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="2" BlurRadius="10" Opacity="0.3"/>
+                            </Border.Effect>
+                            
+                            <StackPanel>
+                                <!-- Standard Style Option -->
+                                <Border x:Name="StandardOption"
+                                        Height="42"
+                                        Background="Transparent"
+                                        Cursor="Hand"
+                                        Tag="Standard"
+                                        MouseLeftButtonDown="StyleOption_MouseLeftButtonDown"
+                                        MouseEnter="StyleOption_MouseEnter"
+                                        MouseLeave="StyleOption_MouseLeave">
+                                    <Grid Margin="6,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Border Grid.Column="0"
+                                                Width="32"
+                                                Height="32"
+                                                Background="#1A1A1A"
+                                                CornerRadius="3"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+                                            <Canvas Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Path Stroke="White" StrokeThickness="1.5">
+                                                    <Path.Data>
+                                                        <GeometryGroup>
+                                                            <LineGeometry StartPoint="10,0" EndPoint="10,20"/>
+                                                            <LineGeometry StartPoint="0,10" EndPoint="20,10"/>
+                                                        </GeometryGroup>
+                                                    </Path.Data>
+                                                </Path>
+                                            </Canvas>
+                                        </Border>
+                                        
+                                        <TextBlock Grid.Column="1"
+                                                   Text="Standard"
+                                                   VerticalAlignment="Center"
+                                                   Margin="8,0,0,0"
+                                                   Foreground="White"
+                                                   FontWeight="Medium"/>
+                                    </Grid>
+                                </Border>
+                                
+                                <!-- Dot Style Option -->
+                                <Border x:Name="DotOption"
+                                        Height="42"
+                                        Background="Transparent"
+                                        Cursor="Hand"
+                                        Tag="Dot"
+                                        MouseLeftButtonDown="StyleOption_MouseLeftButtonDown"
+                                        MouseEnter="StyleOption_MouseEnter"
+                                        MouseLeave="StyleOption_MouseLeave">
+                                    <Grid Margin="6,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Border Grid.Column="0"
+                                                Width="32"
+                                                Height="32"
+                                                Background="#1A1A1A"
+                                                CornerRadius="3"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+                                            <Canvas Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Ellipse Fill="White" Width="6" Height="6" Canvas.Left="7" Canvas.Top="7"/>
+                                            </Canvas>
+                                        </Border>
+                                        
+                                        <TextBlock Grid.Column="1"
+                                                   Text="Dot"
+                                                   VerticalAlignment="Center"
+                                                   Margin="8,0,0,0"
+                                                   Foreground="White"
+                                                   FontWeight="Medium"/>
+                                    </Grid>
+                                </Border>
+                                
+                                <!-- Circle Style Option -->
+                                <Border x:Name="CircleOption"
+                                        Height="42"
+                                        Background="Transparent"
+                                        Cursor="Hand"
+                                        Tag="Circle"
+                                        MouseLeftButtonDown="StyleOption_MouseLeftButtonDown"
+                                        MouseEnter="StyleOption_MouseEnter"
+                                        MouseLeave="StyleOption_MouseLeave">
+                                    <Grid Margin="6,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Border Grid.Column="0"
+                                                Width="32"
+                                                Height="32"
+                                                Background="#1A1A1A"
+                                                CornerRadius="3"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+                                            <Canvas Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Ellipse Stroke="White" StrokeThickness="1.5" Width="14" Height="14" Canvas.Left="3" Canvas.Top="3"/>
+                                            </Canvas>
+                                        </Border>
+                                        
+                                        <TextBlock Grid.Column="1"
+                                                   Text="Circle"
+                                                   VerticalAlignment="Center"
+                                                   Margin="8,0,0,0"
+                                                   Foreground="White"
+                                                   FontWeight="Medium"/>
+                                    </Grid>
+                                </Border>
+                                
+                                <!-- Tactical Style Option -->
+                                <Border x:Name="TacticalOption"
+                                        Height="42"
+                                        Background="Transparent"
+                                        Cursor="Hand"
+                                        Tag="Tactical"
+                                        MouseLeftButtonDown="StyleOption_MouseLeftButtonDown"
+                                        MouseEnter="StyleOption_MouseEnter"
+                                        MouseLeave="StyleOption_MouseLeave">
+                                    <Grid Margin="6,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Border Grid.Column="0"
+                                                Width="32"
+                                                Height="32"
+                                                Background="#1A1A1A"
+                                                CornerRadius="3"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+                                            <Canvas Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Path Stroke="White" StrokeThickness="1.5" Data="M10,2 L10,18 M2,10 L18,10 M6,6 L14,14 M14,6 L6,14"/>
+                                            </Canvas>
+                                        </Border>
+                                        
+                                        <TextBlock Grid.Column="1"
+                                                   Text="Tactical"
+                                                   VerticalAlignment="Center"
+                                                   Margin="8,0,0,0"
+                                                   Foreground="White"
+                                                   FontWeight="Medium"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+                
+                <!-- Color Selection -->
+                <TextBlock Text="COLOR" FontWeight="SemiBold" Margin="0,0,0,8" FontSize="14"/>
+                <WrapPanel Margin="0,0,0,8">
+                    <Button Style="{StaticResource ColorButton}" Background="#3498DB"/>
+                    <Button Style="{StaticResource ColorButton}" Background="#2ECC71"/>
+                    <Button Style="{StaticResource ColorButton}" Background="#F1C40F"/>
+                    <Button Style="{StaticResource ColorButton}" Background="#E74C3C"/>
+                    <Button Style="{StaticResource ColorButton}" Background="#9B59B6"/>
+                    <Button Style="{StaticResource ColorButton}" Background="#1ABC9C"/>
+                    <Button Style="{StaticResource ColorButton}" Background="#FFFFFF"/>
+                    <Button Style="{StaticResource ColorButton}" Background="#000000"/>
+                </WrapPanel>
+                
+                <!-- Simple and clean color picker button -->
+                <Grid Margin="0,0,0,15">
+                    <Button x:Name="ChooseColorButton" 
+                            Click="ChooseColor_Click"
+                            Height="36" 
+                            Width="180"
+                            HorizontalAlignment="Left">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderBrush" Value="#444444"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    CornerRadius="4">
+                                                <DockPanel LastChildFill="True">
+                                                    <!-- Color swatch -->
+                                                    <Border DockPanel.Dock="Left"
+                                                            Width="36"
+                                                            Background="{Binding ElementName=CrosshairPath, Path=Stroke, FallbackValue=White}"
+                                                            CornerRadius="3,0,0,3"/>
+                                                    
+                                                    <!-- Text -->
+                                                    <TextBlock Text="SELECT COLOR"
+                                                               VerticalAlignment="Center"
+                                                               HorizontalAlignment="Center"
+                                                               Foreground="White"
+                                                               FontSize="12"
+                                                               FontWeight="SemiBold"
+                                                               Margin="10,0"/>
+                                                </DockPanel>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#333333"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Background" Value="#111111"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+                
+                <!-- Size Slider -->
+                <TextBlock Text="SIZE" FontWeight="SemiBold" Margin="0,0,0,8" FontSize="14"/>
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Slider x:Name="SizeSlider" Minimum="10" Maximum="50" Value="20" 
+                            Style="{StaticResource ModernSlider}"
+                            ValueChanged="SizeSlider_ValueChanged"/>
+                    <TextBlock Grid.Column="1" Margin="15,0,0,0" 
+                               Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" FontSize="14"/>
+                </Grid>
+                
+                <!-- Thickness Slider -->
+                <TextBlock Text="THICKNESS" FontWeight="SemiBold" Margin="0,0,0,8" FontSize="14"/>
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Slider x:Name="ThicknessSlider" Minimum="1" Maximum="5" Value="2" 
+                            Style="{StaticResource ModernSlider}"
+                            ValueChanged="ThicknessSlider_ValueChanged"/>
+                    <TextBlock Grid.Column="1" Margin="15,0,0,0" 
+                               Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" FontSize="14"/>
+                </Grid>
+                
+                <!-- Opacity Slider -->
+                <TextBlock Text="OPACITY" FontWeight="SemiBold" Margin="0,0,0,8" FontSize="14"/>
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Slider x:Name="OpacitySlider" Minimum="0.1" Maximum="1" Value="1" 
+                            Style="{StaticResource ModernSlider}"
+                            ValueChanged="OpacitySlider_ValueChanged"/>
+                    <TextBlock Grid.Column="1" Margin="15,0,0,0" 
+                               Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" FontSize="14"/>
+                </Grid>
+                
+                <!-- Apply Button -->
+                <Button Content="APPLY TO OVERLAY" 
+                        Margin="0,25,0,0" 
+                        HorizontalAlignment="Left" 
+                        Padding="20,12" 
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Foreground="White"
+                        Background="{StaticResource AccentBrush}"
+                        BorderThickness="0"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="8" 
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource AccentBrushHover}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource AccentBrushPressed}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Effect>
+                        <DropShadowEffect ShadowDepth="2" Opacity="0.3" BlurRadius="5"/>
+                    </Button.Effect>
+                </Button>
+            </StackPanel>
         </Border>
+        
+        <!-- ColorPicker Popup -->
+        <Popup x:Name="ColorPickerPopup" 
+               StaysOpen="False"
+               AllowsTransparency="True">
+            <Border Background="#222222" 
+                    BorderBrush="#444444"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="15"
+                    Width="240">
+                <StackPanel>
+                    <TextBlock Text="SELECT COLOR" 
+                              Foreground="White" 
+                              FontWeight="SemiBold"
+                              Margin="0,0,0,10"/>
+                              
+                    <!-- Color swatches grid -->
+                    <UniformGrid Columns="5" Rows="2" Margin="0,0,0,10">
+                        <Button Width="30" Height="30" Margin="3" Background="White" Click="ColorSwatch_Click" Tag="#FFFFFF"/>
+                        <Button Width="30" Height="30" Margin="3" Background="Red" Click="ColorSwatch_Click" Tag="#FF0000"/>
+                        <Button Width="30" Height="30" Margin="3" Background="Green" Click="ColorSwatch_Click" Tag="#00FF00"/>
+                        <Button Width="30" Height="30" Margin="3" Background="Blue" Click="ColorSwatch_Click" Tag="#0000FF"/>
+                        <Button Width="30" Height="30" Margin="3" Background="Yellow" Click="ColorSwatch_Click" Tag="#FFFF00"/>
+                        <Button Width="30" Height="30" Margin="3" Background="Cyan" Click="ColorSwatch_Click" Tag="#00FFFF"/>
+                        <Button Width="30" Height="30" Margin="3" Background="Magenta" Click="ColorSwatch_Click" Tag="#FF00FF"/>
+                        <Button Width="30" Height="30" Margin="3" Background="Black" Click="ColorSwatch_Click" Tag="#000000"/>
+                        <Button Width="30" Height="30" Margin="3" Background="Orange" Click="ColorSwatch_Click" Tag="#FFA500"/>
+                        <Button Width="30" Height="30" Margin="3" Background="Purple" Click="ColorSwatch_Click" Tag="#800080"/>
+                    </UniformGrid>
+                    
+                    <!-- Apply button -->
+                    <Button Content="APPLY" 
+                            Margin="0,10,0,0" 
+                            Background="#3498db"
+                            Foreground="White"
+                            Padding="10,5"
+                            Click="ApplyColor_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
     </Grid>
 </UserControl>
