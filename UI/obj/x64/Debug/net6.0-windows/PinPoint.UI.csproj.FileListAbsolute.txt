@@ -8,7 +8,6 @@ C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\A
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\CommunityView.g.cs
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\DesignerView.g.cs
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\ExportDialog.g.cs
-C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\MainView.g.cs
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\MainWindow.g.cs
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\SettingsView.g.cs
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\App.g.cs
@@ -20,7 +19,6 @@ C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\A
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\CommunityView.baml
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\DesignerView.baml
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\ExportDialog.baml
-C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\MainView.baml
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\MainWindow.baml
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\Views\SettingsView.baml
 C:\Users\poste\source\repos\PinPointApps\UI\obj\x64\Debug\net6.0-windows\PinPoint.UI.g.resources

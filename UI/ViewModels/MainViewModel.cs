@@ -5,6 +5,8 @@ using System.Windows.Input;
 using PinPoint.UI.Services;
 using PinPoint.UI.Commands;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using PinPoint.UI.Views;
 
 namespace PinPoint.UI.ViewModels
 {
@@ -19,6 +21,11 @@ namespace PinPoint.UI.ViewModels
         {
             // Initialize commands
             ToggleOverlayCommand = new RelayCommand(ExecuteToggleOverlay);
+
+            // Initialize views
+            DesignerView = new DesignerView();
+            SettingsView = new SettingsView();
+            AboutView = new AboutView();
         }
 
         public bool IsOverlayVisible
@@ -103,5 +110,9 @@ namespace PinPoint.UI.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public UserControl DesignerView { get; private set; }
+        public UserControl SettingsView { get; private set; }
+        public UserControl AboutView { get; private set; }
     }
 }

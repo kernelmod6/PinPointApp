@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 C:\Users\poste\source\repos\PinPointApps\UI\App.xaml
-7-1399346394
+61638775166
 1-1622066715
 23-780187029
 2031638383535
-Views\AboutView.xaml;Views\CommunityView.xaml;Views\DesignerView.xaml;Views\ExportDialog.xaml;Views\MainView.xaml;Views\MainWindow.xaml;Views\SettingsView.xaml;
+Views\AboutView.xaml;Views\CommunityView.xaml;Views\DesignerView.xaml;Views\ExportDialog.xaml;Views\MainWindow.xaml;Views\SettingsView.xaml;
 
-True
+False
 

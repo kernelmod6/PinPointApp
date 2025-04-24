@@ -5,8 +5,1811 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:PinPoint.UI.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="1000">
+    
+    <UserControl.Resources>
+        <!-- Settings Header Style -->
+        <Style x:Key="SettingsHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="Margin" Value="0,0,0,24"/>
+        </Style>
+        
+        <!-- Settings Category Style -->
+        <Style x:Key="SettingsCategoryStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
+        </Style>
+        
+        <!-- Settings Section Style -->
+        <Style x:Key="SettingsSectionStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Margin" Value="0,16,0,12"/>
+        </Style>
+        
+        <!-- Settings Option Style -->
+        <Style x:Key="SettingsOptionStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <!-- Settings Description Style -->
+        <Style x:Key="SettingsDescriptionStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+            <Setter Property="Margin" Value="0,4,0,0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        
+        <!-- Better card size and consistent alignment -->
+        <Style x:Key="SettingsCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#1E2832"/>
+            <Setter Property="BorderBrush" Value="#252E38"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="30,24"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+            <Setter Property="MaxWidth" Value="950"/>        <!-- Increased card width -->
+            <Setter Property="MinWidth" Value="600"/>        <!-- Set minimum width -->
+            <Setter Property="HorizontalAlignment" Value="Stretch"/> <!-- Use stretch for consistent width -->
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" 
+                                     ShadowDepth="1" 
+                                     Opacity="0.15" 
+                                     Color="Black"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Toggle Switch Style -->
+        <Style x:Key="ToggleSwitchStyle" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <Border x:Name="BackgroundElement" Background="#333333" CornerRadius="10" Height="20" Width="40" HorizontalAlignment="Left"/>
+                            <Border x:Name="ThumbElement" Background="White" CornerRadius="10" Height="26" Width="26" HorizontalAlignment="Left" Margin="-3,0,0,0">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="6" ShadowDepth="1" Opacity="0.3" Color="#22000000"/>
+                                </Border.Effect>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="BackgroundElement" Property="Background" Value="{StaticResource AccentBrush}"/>
+                                <Setter TargetName="ThumbElement" Property="Margin" Value="17,0,0,0"/>
+                                <Setter TargetName="ThumbElement" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Modern ScrollBar Thumb Style -->
+        <Style x:Key="ModernScrollBarThumb" TargetType="{x:Type Thumb}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border x:Name="ThumbBorder" 
+                                Background="#60FFFFFF" 
+                                CornerRadius="4" 
+                                Margin="3,0">
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="ThumbBorder" Property="Background" Value="{StaticResource AccentBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsDragging" Value="true">
+                                <Setter TargetName="ThumbBorder" Property="Background" Value="{StaticResource AccentBrushLight}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern ScrollBar Style -->
+        <Style x:Key="ModernScrollBar" TargetType="{x:Type ScrollBar}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid Background="Transparent">
+                            <Track x:Name="PART_Track" 
+                                   IsDirectionReversed="true" 
+                                   IsEnabled="{TemplateBinding IsMouseOver}">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.PageUpCommand" 
+                                                  Background="Transparent" 
+                                                  Opacity="0"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.PageDownCommand" 
+                                                  Background="Transparent" 
+                                                  Opacity="0"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource ModernScrollBarThumb}"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern ScrollViewer Style -->
+        <Style x:Key="ModernScrollViewer" TargetType="{x:Type ScrollViewer}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <ScrollContentPresenter Grid.Column="0" Grid.Row="0"/>
+
+                            <ScrollBar x:Name="PART_VerticalScrollBar"
+                                      Grid.Column="1" Grid.Row="0"
+                                      Value="{TemplateBinding VerticalOffset}"
+                                      Maximum="{TemplateBinding ScrollableHeight}"
+                                      ViewportSize="{TemplateBinding ViewportHeight}"
+                                      Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                      Style="{StaticResource ModernScrollBar}"/>
+
+                            <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                      Orientation="Horizontal"
+                                      Grid.Column="0" Grid.Row="1"
+                                      Value="{TemplateBinding HorizontalOffset}"
+                                      Maximum="{TemplateBinding ScrollableWidth}"
+                                      ViewportSize="{TemplateBinding ViewportWidth}"
+                                      Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                      Style="{StaticResource ModernScrollBar}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Settings Nav Button Style (this was missing) -->
+        <Style x:Key="SettingsNavButtonStyle" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="24,12"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid>
+                            <Border x:Name="NavBorder" 
+                                   Background="{TemplateBinding Background}" 
+                                   BorderThickness="0" 
+                                   CornerRadius="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Rectangle x:Name="ActiveIndicator" 
+                                           Grid.Column="0" 
+                                           Fill="#3498DB" 
+                                           Visibility="Collapsed"/>
+                                    
+                                    <ContentPresenter Grid.Column="1" 
+                                                    VerticalAlignment="Center" 
+                                                    HorizontalAlignment="Left" 
+                                                    Margin="20,0,0,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#252E38"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#252E38"/>
+                                <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="#252E38"/>
+                                <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern ComboBox Style -->
+        <Style x:Key="ModernComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Background" Value="#252E38"/>
+            <Setter Property="BorderBrush" Value="#3A4655"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <EventSetter Event="PreviewMouseWheel" Handler="ComboBox_PreviewMouseWheel"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton"
+                                         ClickMode="Press"
+                                         Focusable="False"
+                                         IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         Background="{TemplateBinding Background}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="MainBorder"
+                                               Background="{TemplateBinding Background}"
+                                               BorderBrush="{TemplateBinding BorderBrush}"
+                                               BorderThickness="1"
+                                               CornerRadius="4">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Fixed ContentPresenter to show selected item -->
+                                                <ContentPresenter Grid.Column="0"
+                                                                 Margin="12,8"
+                                                                 HorizontalAlignment="Left"
+                                                                 VerticalAlignment="Center"
+                                                                 ContentSource="Content"/>
+
+                                                <!-- Down Arrow -->
+                                                <Path x:Name="DownArrow"
+                                                     Grid.Column="1"
+                                                     Data="M7,10L12,15L17,10H7Z"
+                                                     Fill="White"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,12,0"
+                                                     Width="14"
+                                                     Height="14"
+                                                     Stretch="Uniform"/>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#303C48" TargetName="MainBorder"/>
+                                                <Setter Property="BorderBrush" Value="#4A5665" TargetName="MainBorder"/>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="Background" Value="#303C48" TargetName="MainBorder"/>
+                                                <Setter Property="BorderBrush" Value="#3498DB" TargetName="MainBorder"/>
+                                                <Setter Property="Data" Value="M7,15L12,10L17,15H7Z" TargetName="DownArrow"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            
+                            <!-- Display selected item text -->
+                            <ContentPresenter 
+                                 Margin="{TemplateBinding Padding}"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Center"
+                                 Content="{TemplateBinding SelectionBoxItem}"
+                                 ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                 IsHitTestVisible="False"/>
+                            
+                            <Popup x:Name="PART_Popup"
+                                  IsOpen="{Binding IsChecked, ElementName=ToggleButton, Mode=TwoWay}"
+                                  AllowsTransparency="True"
+                                  Placement="Bottom"
+                                  PopupAnimation="Fade"
+                                  Focusable="False">
+                                <Border x:Name="DropDownBorder"
+                                       Background="#1A242D" 
+                                       BorderBrush="#3A4655"
+                                       BorderThickness="1"
+                                       CornerRadius="4"
+                                       MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                       MinWidth="{Binding ActualWidth, ElementName=ToggleButton}">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.2" Color="Black"/>
+                                    </Border.Effect>
+                                    <ScrollViewer CanContentScroll="True" Margin="0,4">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            
+            <!-- Item container style -->
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Padding" Value="12,8"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ComboBoxItem">
+                                    <Border x:Name="Border"
+                                           Background="{TemplateBinding Background}"
+                                           Padding="{TemplateBinding Padding}"
+                                           SnapsToDevicePixels="true">
+                                        <ContentPresenter/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#3498DB" TargetName="Border"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#2980B9" TargetName="Border"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern Action Button -->
+        <Style x:Key="ModernActionButton" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="ButtonBorder" 
+                                   Background="{TemplateBinding Background}" 
+                                   CornerRadius="6"
+                                   Padding="{TemplateBinding Padding}">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="1" 
+                                                     BlurRadius="5" 
+                                                     Opacity="0.3" 
+                                                     Color="#000000"/>
+                                </Border.Effect>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <!-- Export Icon -->
+                                    <Path x:Name="ExportIcon" 
+                                         Grid.Column="0"
+                                         Data="M19,9h-4V3H9v6H5l7,7L19,9z M5,18v2h14v-2H5z"
+                                         Fill="{TemplateBinding Foreground}"
+                                         Width="18" 
+                                         Height="18"
+                                         Stretch="Uniform"
+                                         Margin="0,0,8,0"/>
+                                    
+                                    <!-- Button Text -->
+                                    <ContentPresenter Grid.Column="1"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2980B9" TargetName="ButtonBorder"/>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="2" 
+                                                         BlurRadius="8" 
+                                                         Opacity="0.4" 
+                                                         Color="#000000"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#1F6AA5" TargetName="ButtonBorder"/>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="1" 
+                                                         BlurRadius="3" 
+                                                         Opacity="0.3" 
+                                                         Color="#000000"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
-        <TextBlock Text="Settings" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Modern Navigation Panel -->
+        <Border Grid.Column="0" 
+               Background="#1A242D" 
+               BorderBrush="#252E38" 
+               BorderThickness="0,0,1,0">
+            <StackPanel Margin="0,30,0,0">
+                <TextBlock Text="Settings" 
+                         FontSize="22" 
+                         FontWeight="SemiBold" 
+                         Margin="24,0,0,30" 
+                         Foreground="{StaticResource TextPrimaryBrush}"/>
+                
+                <!-- Navigation Buttons -->
+                <RadioButton x:Name="AppearanceNavButton"
+                           Content="Appearance" 
+                           GroupName="SettingsNav" 
+                           Tag="Appearance"
+                           IsChecked="True" 
+                           Checked="SettingsNavButton_Checked">
+                    <RadioButton.Template>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Grid Height="48">
+                                <Border x:Name="NavBorder" 
+                                       Background="Transparent" 
+                                       BorderThickness="0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="5"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Rectangle x:Name="ActiveIndicator" 
+                                                 Grid.Column="0" 
+                                                 Fill="#3498DB" 
+                                                 Visibility="Collapsed"/>
+                                        
+                                        <StackPanel Grid.Column="1" 
+                                                  Orientation="Horizontal" 
+                                                  VerticalAlignment="Center" 
+                                                  Margin="20,0,0,0">
+                                            <Path x:Name="IconPath" 
+                                                 Data="M12,3C7.03,3 3,7.03 3,12C3,16.97 7.03,21 12,21C16.97,21 21,16.97 21,12C21,7.03 16.97,3 12,3M12,7C13.1,7 14,7.9 14,9C14,10.1 13.1,11 12,11C10.9,11 10,10.1 10,9C10,7.9 10.9,7 12,7M16,16H8V15C8,13.34 10.67,12.5 12,12.5C13.33,12.5 16,13.34 16,15V16Z" 
+                                                 Fill="#7A8A99" 
+                                                 Width="20" 
+                                                 Height="20" 
+                                                 Stretch="Uniform" 
+                                                 Margin="0,0,12,0"/>
+                                            
+                                            <TextBlock x:Name="ContentText" 
+                                                     Text="{TemplateBinding Content}" 
+                                                     Foreground="#A5B5C5" 
+                                                     FontSize="15" 
+                                                     VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetName="NavBorder" 
+                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                              To="#252E38" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="ContentText" 
+                                                              Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                              To="#FFFFFF" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ActiveIndicator" 
+                                                                             Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ColorAnimation Storyboard.TargetName="NavBorder" 
+                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                              To="#252E38" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="ContentText" 
+                                                              Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                              To="#3498DB" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="IconPath" 
+                                                              Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)"
+                                                              To="#3498DB" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </RadioButton.Template>
+                </RadioButton>
+                
+                <RadioButton x:Name="BehaviorNavButton"
+                           Content="Behavior" 
+                           GroupName="SettingsNav" 
+                           Tag="Behavior"
+                           Checked="SettingsNavButton_Checked">
+                    <RadioButton.Template>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Grid Height="48">
+                                <Border x:Name="NavBorder" 
+                                       Background="Transparent" 
+                                       BorderThickness="0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="5"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Rectangle x:Name="ActiveIndicator" 
+                                                 Grid.Column="0" 
+                                                 Fill="#3498DB" 
+                                                 Visibility="Collapsed"/>
+                                        
+                                        <StackPanel Grid.Column="1" 
+                                                  Orientation="Horizontal" 
+                                                  VerticalAlignment="Center" 
+                                                  Margin="20,0,0,0">
+                                            <Path x:Name="IconPath" 
+                                                 Data="M12,16A2,2 0 0,1 10,14A2,2 0 0,1 12,12A2,2 0 0,1 14,14A2,2 0 0,1 12,16M12,10C7.58,10 4,12.25 4,14V16H7V14C7,13.18 9.35,12 12,12C14.65,12 17,13.18 17,14V16H20V14C20,12.25 16.42,10 12,10M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,6A2,2 0 0,0 10,8A2,2 0 0,0 12,10A2,2 0 0,0 14,8A2,2 0 0,0 12,6Z" 
+                                                 Fill="#7A8A99" 
+                                                 Width="20" 
+                                                 Height="20" 
+                                                 Stretch="Uniform" 
+                                                 Margin="0,0,12,0"/>
+                                            
+                                            <TextBlock x:Name="ContentText" 
+                                                     Text="{TemplateBinding Content}" 
+                                                     Foreground="#A5B5C5" 
+                                                     FontSize="15" 
+                                                     VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetName="NavBorder" 
+                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                              To="#252E38" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="ContentText" 
+                                                              Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                              To="#FFFFFF" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ActiveIndicator" 
+                                                                             Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ColorAnimation Storyboard.TargetName="NavBorder" 
+                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                              To="#252E38" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="ContentText" 
+                                                              Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                              To="#3498DB" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="IconPath" 
+                                                              Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)"
+                                                              To="#3498DB" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </RadioButton.Template>
+                </RadioButton>
+                
+                <RadioButton x:Name="PerformanceNavButton"
+                           Content="Performance" 
+                           GroupName="SettingsNav" 
+                           Tag="Performance"
+                           Checked="SettingsNavButton_Checked">
+                    <RadioButton.Template>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Grid Height="48">
+                                <Border x:Name="NavBorder" 
+                                       Background="Transparent" 
+                                       BorderThickness="0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="5"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Rectangle x:Name="ActiveIndicator" 
+                                                 Grid.Column="0" 
+                                                 Fill="#3498DB" 
+                                                 Visibility="Collapsed"/>
+                                        
+                                        <StackPanel Grid.Column="1" 
+                                                  Orientation="Horizontal" 
+                                                  VerticalAlignment="Center" 
+                                                  Margin="20,0,0,0">
+                                            <Path x:Name="IconPath" 
+                                                 Data="M7,22H9V24H7V22M11,22H13V24H11V22M15,22H17V24H15V22M5,4H19A2,2 0 0,1 21,6V18A2,2 0 0,1 19,20H5A2,2 0 0,1 3,18V6A2,2 0 0,1 5,4M5,8V18H19V8H5Z" 
+                                                 Fill="#7A8A99" 
+                                                 Width="20" 
+                                                 Height="20" 
+                                                 Stretch="Uniform" 
+                                                 Margin="0,0,12,0"/>
+                                            
+                                            <TextBlock x:Name="ContentText" 
+                                                     Text="{TemplateBinding Content}" 
+                                                     Foreground="#A5B5C5" 
+                                                     FontSize="15" 
+                                                     VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetName="NavBorder" 
+                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                              To="#252E38" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="ContentText" 
+                                                              Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                              To="#FFFFFF" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ActiveIndicator" 
+                                                                             Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ColorAnimation Storyboard.TargetName="NavBorder" 
+                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                              To="#252E38" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="ContentText" 
+                                                              Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                              To="#3498DB" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="IconPath" 
+                                                              Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)"
+                                                              To="#3498DB" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </RadioButton.Template>
+                </RadioButton>
+                
+                <RadioButton x:Name="AdvancedNavButton"
+                           Content="Advanced" 
+                           GroupName="SettingsNav" 
+                           Tag="Advanced"
+                           Checked="SettingsNavButton_Checked">
+                    <RadioButton.Template>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Grid Height="48">
+                                <Border x:Name="NavBorder" 
+                                       Background="Transparent" 
+                                       BorderThickness="0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="5"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Rectangle x:Name="ActiveIndicator" 
+                                                 Grid.Column="0" 
+                                                 Fill="#3498DB" 
+                                                 Visibility="Collapsed"/>
+                                        
+                                        <StackPanel Grid.Column="1" 
+                                                  Orientation="Horizontal" 
+                                                  VerticalAlignment="Center" 
+                                                  Margin="20,0,0,0">
+                                            <Path x:Name="IconPath" 
+                                                 Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" 
+                                                 Fill="#7A8A99" 
+                                                 Width="20" 
+                                                 Height="20" 
+                                                 Stretch="Uniform" 
+                                                 Margin="0,0,12,0"/>
+                                            
+                                            <TextBlock x:Name="ContentText" 
+                                                     Text="{TemplateBinding Content}" 
+                                                     Foreground="#A5B5C5" 
+                                                     FontSize="15" 
+                                                     VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetName="NavBorder" 
+                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                              To="#252E38" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="ContentText" 
+                                                              Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                              To="#FFFFFF" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ActiveIndicator" 
+                                                                             Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ColorAnimation Storyboard.TargetName="NavBorder" 
+                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                              To="#252E38" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="ContentText" 
+                                                              Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                              To="#3498DB" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="IconPath" 
+                                                              Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)"
+                                                              To="#3498DB" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </RadioButton.Template>
+                </RadioButton>
+                
+                <RadioButton x:Name="AboutNavButton"
+                           Content="About" 
+                           GroupName="SettingsNav" 
+                           Tag="About"
+                           Checked="SettingsNavButton_Checked">
+                    <RadioButton.Template>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Grid Height="48">
+                                <Border x:Name="NavBorder" 
+                                       Background="Transparent" 
+                                       BorderThickness="0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="5"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Rectangle x:Name="ActiveIndicator" 
+                                                 Grid.Column="0" 
+                                                 Fill="#3498DB" 
+                                                 Visibility="Collapsed"/>
+                                        
+                                        <StackPanel Grid.Column="1" 
+                                                  Orientation="Horizontal" 
+                                                  VerticalAlignment="Center" 
+                                                  Margin="20,0,0,0">
+                                            <Path x:Name="IconPath" 
+                                                 Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" 
+                                                 Fill="#7A8A99" 
+                                                 Width="20" 
+                                                 Height="20" 
+                                                 Stretch="Uniform" 
+                                                 Margin="0,0,12,0"/>
+                                            
+                                            <TextBlock x:Name="ContentText" 
+                                                     Text="{TemplateBinding Content}" 
+                                                     Foreground="#A5B5C5" 
+                                                     FontSize="15" 
+                                                     VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetName="NavBorder" 
+                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                              To="#252E38" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="ContentText" 
+                                                              Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                              To="#FFFFFF" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ActiveIndicator" 
+                                                                             Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ColorAnimation Storyboard.TargetName="NavBorder" 
+                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                              To="#252E38" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="ContentText" 
+                                                              Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                              To="#3498DB" Duration="0:0:0.1"/>
+                                                <ColorAnimation Storyboard.TargetName="IconPath" 
+                                                              Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)"
+                                                              To="#3498DB" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </RadioButton.Template>
+                </RadioButton>
+            </StackPanel>
+        </Border>
+        
+        <!-- Settings Content Area with Global ScrollViewer -->
+        <Grid Grid.Column="1">
+            <ScrollViewer Style="{StaticResource ModernScrollViewer}"
+                         VerticalScrollBarVisibility="Auto" 
+                         HorizontalScrollBarVisibility="Disabled"
+                         Padding="30,30,30,40">
+                <!-- Container for consistent sizing -->
+                <Grid MaxWidth="1000" HorizontalAlignment="Center">
+                    <!-- Each section with proper top margin on first card -->
+                    <StackPanel x:Name="AppearanceSection" Visibility="Visible" Margin="0,20,0,0">
+                        <Border Style="{StaticResource SettingsCardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Theme" Style="{StaticResource SettingsSectionStyle}"/>
+                                
+                                <!-- Dark Theme Toggle -->
+                                <Grid Margin="0,16,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Dark Theme" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Use dark mode for the application interface" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="True"/>
+                                </Grid>
+                                
+                                <!-- Accent Color -->
+                                <TextBlock Text="Accent Color" Style="{StaticResource SettingsOptionStyle}" Margin="0,0,0,8"/>
+                                <TextBlock Text="Choose the highlight color for the interface" 
+                                         Style="{StaticResource SettingsDescriptionStyle}" Margin="0,0,0,16"/>
+                                
+                                <UniformGrid Columns="7" HorizontalAlignment="Left" Margin="0,0,0,8">
+                                    <RadioButton GroupName="AccentColor" Width="36" Height="36" Margin="4">
+                                        <RadioButton.Template>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <Grid>
+                                                    <Ellipse Width="30" Height="30" Fill="#3498db" StrokeThickness="2">
+                                                        <Ellipse.Stroke>
+                                                            <SolidColorBrush Color="#3498db" Opacity="0.3"/>
+                                                        </Ellipse.Stroke>
+                                                    </Ellipse>
+                                                    <Ellipse x:Name="CheckMark" Width="12" Height="12" Fill="White" Opacity="0"/>
+                                                    <Ellipse x:Name="HoverEffect" Width="36" Height="36" Stroke="White" StrokeThickness="2" Opacity="0"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="CheckMark" Property="Opacity" Value="1"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="HoverEffect" Property="Opacity" Value="0.3"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </RadioButton.Template>
+                                    </RadioButton>
+                                    
+                                    <RadioButton GroupName="AccentColor" Width="36" Height="36" Margin="4">
+                                        <RadioButton.Template>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <Grid>
+                                                    <Ellipse Width="30" Height="30" Fill="#e74c3c" StrokeThickness="2">
+                                                        <Ellipse.Stroke>
+                                                            <SolidColorBrush Color="#e74c3c" Opacity="0.3"/>
+                                                        </Ellipse.Stroke>
+                                                    </Ellipse>
+                                                    <Ellipse x:Name="CheckMark" Width="12" Height="12" Fill="White" Opacity="0"/>
+                                                    <Ellipse x:Name="HoverEffect" Width="36" Height="36" Stroke="White" StrokeThickness="2" Opacity="0"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="CheckMark" Property="Opacity" Value="1"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="HoverEffect" Property="Opacity" Value="0.3"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </RadioButton.Template>
+                                    </RadioButton>
+                                    
+                                    <RadioButton GroupName="AccentColor" Width="36" Height="36" Margin="4">
+                                        <RadioButton.Template>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <Grid>
+                                                    <Ellipse Width="30" Height="30" Fill="#2ecc71" StrokeThickness="2">
+                                                        <Ellipse.Stroke>
+                                                            <SolidColorBrush Color="#2ecc71" Opacity="0.3"/>
+                                                        </Ellipse.Stroke>
+                                                    </Ellipse>
+                                                    <Ellipse x:Name="CheckMark" Width="12" Height="12" Fill="White" Opacity="0"/>
+                                                    <Ellipse x:Name="HoverEffect" Width="36" Height="36" Stroke="White" StrokeThickness="2" Opacity="0"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="CheckMark" Property="Opacity" Value="1"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="HoverEffect" Property="Opacity" Value="0.3"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </RadioButton.Template>
+                                    </RadioButton>
+                                    
+                                    <RadioButton GroupName="AccentColor" Width="36" Height="36" Margin="4">
+                                        <RadioButton.Template>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <Grid>
+                                                    <Ellipse Width="30" Height="30" Fill="#9b59b6" StrokeThickness="2">
+                                                        <Ellipse.Stroke>
+                                                            <SolidColorBrush Color="#9b59b6" Opacity="0.3"/>
+                                                        </Ellipse.Stroke>
+                                                    </Ellipse>
+                                                    <Ellipse x:Name="CheckMark" Width="12" Height="12" Fill="White" Opacity="0"/>
+                                                    <Ellipse x:Name="HoverEffect" Width="36" Height="36" Stroke="White" StrokeThickness="2" Opacity="0"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="CheckMark" Property="Opacity" Value="1"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="HoverEffect" Property="Opacity" Value="0.3"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </RadioButton.Template>
+                                    </RadioButton>
+                                    
+                                    <RadioButton GroupName="AccentColor" Width="36" Height="36" Margin="4">
+                                        <RadioButton.Template>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <Grid>
+                                                    <Ellipse Width="30" Height="30" Fill="#f39c12" StrokeThickness="2">
+                                                        <Ellipse.Stroke>
+                                                            <SolidColorBrush Color="#f39c12" Opacity="0.3"/>
+                                                        </Ellipse.Stroke>
+                                                    </Ellipse>
+                                                    <Ellipse x:Name="CheckMark" Width="12" Height="12" Fill="White" Opacity="0"/>
+                                                    <Ellipse x:Name="HoverEffect" Width="36" Height="36" Stroke="White" StrokeThickness="2" Opacity="0"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="CheckMark" Property="Opacity" Value="1"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="HoverEffect" Property="Opacity" Value="0.3"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </RadioButton.Template>
+                                    </RadioButton>
+                                    
+                                    <RadioButton GroupName="AccentColor" Width="36" Height="36" Margin="4">
+                                        <RadioButton.Template>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <Grid>
+                                                    <Ellipse Width="30" Height="30" Fill="#1abc9c" StrokeThickness="2">
+                                                        <Ellipse.Stroke>
+                                                            <SolidColorBrush Color="#1abc9c" Opacity="0.3"/>
+                                                        </Ellipse.Stroke>
+                                                    </Ellipse>
+                                                    <Ellipse x:Name="CheckMark" Width="12" Height="12" Fill="White" Opacity="0"/>
+                                                    <Ellipse x:Name="HoverEffect" Width="36" Height="36" Stroke="White" StrokeThickness="2" Opacity="0"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="CheckMark" Property="Opacity" Value="1"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="HoverEffect" Property="Opacity" Value="0.3"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </RadioButton.Template>
+                                    </RadioButton>
+                                    
+                                    <RadioButton GroupName="AccentColor" Width="36" Height="36" Margin="4">
+                                        <RadioButton.Template>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <Grid>
+                                                    <Ellipse Width="30" Height="30" Fill="#FF8E44AD" StrokeThickness="2">
+                                                        <Ellipse.Stroke>
+                                                            <SolidColorBrush Color="#FF8E44AD" Opacity="0.3"/>
+                                                        </Ellipse.Stroke>
+                                                    </Ellipse>
+                                                    <Ellipse x:Name="CheckMark" Width="12" Height="12" Fill="White" Opacity="0"/>
+                                                    <Ellipse x:Name="HoverEffect" Width="36" Height="36" Stroke="White" StrokeThickness="2" Opacity="0"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="CheckMark" Property="Opacity" Value="1"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="HoverEffect" Property="Opacity" Value="0.3"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </RadioButton.Template>
+                                    </RadioButton>
+                                </UniformGrid>
+                                
+                                <!-- UI Effects -->
+                                <Grid Margin="0,16,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="UI Animations" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Enable smooth transitions and animations in the interface" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="True"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Interface Settings -->
+                        <Border Style="{StaticResource SettingsCardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Interface" Style="{StaticResource SettingsSectionStyle}"/>
+                                
+                                <!-- Show Preview Toggle -->
+                                <Grid Margin="0,16,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Show Preview in Designer" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Display a live preview of the crosshair in the designer" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="True"/>
+                                </Grid>
+                                
+                                <!-- Scale Factor - Clean Minimal Design -->
+                                <Grid Margin="0,16,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="UI Scaling" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Adjust the size of UI elements" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Grid.Column="1" Width="220">
+                                        <!-- Value Display -->
+                                        <TextBlock x:Name="ScaleValueText" 
+                                                 Text="100%" 
+                                                 FontSize="16" 
+                                                 FontWeight="SemiBold" 
+                                                 Foreground="{StaticResource AccentBrush}"
+                                                 HorizontalAlignment="Center" 
+                                                 Margin="0,0,0,12"/>
+                                        
+                                        <!-- Clean Minimal Slider -->
+                                        <Slider x:Name="UIScaleSlider"
+                                               Minimum="75" 
+                                               Maximum="150" 
+                                               Value="100"
+                                               TickFrequency="5" 
+                                               SmallChange="5" 
+                                               IsSnapToTickEnabled="True"
+                                               Margin="5,0"
+                                               ValueChanged="UIScaleSlider_ValueChanged">
+                                            <Slider.Resources>
+                                                <!-- Override the default slider style for a cleaner look -->
+                                                <Style TargetType="Slider">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Slider">
+                                                                <Grid>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Border x:Name="TrackBackground" 
+                                                                           Height="4" 
+                                                                           Grid.Row="1" 
+                                                                           CornerRadius="2" 
+                                                                           Background="#30FFFFFF"/>
+                                                                    <Border x:Name="PART_SelectionRange" 
+                                                                           Height="4" 
+                                                                           Grid.Row="1" 
+                                                                           CornerRadius="2" 
+                                                                           Background="{StaticResource AccentBrush}"
+                                                                           HorizontalAlignment="Left"/>
+                                                                    <Track x:Name="PART_Track" Grid.Row="1">
+                                                                        <Track.Thumb>
+                                                                            <Thumb x:Name="Thumb">
+                                                                                <Thumb.Template>
+                                                                                    <ControlTemplate TargetType="Thumb">
+                                                                                        <Grid>
+                                                                                            <Ellipse Width="16" 
+                                                                                                    Height="16" 
+                                                                                                    Fill="{StaticResource AccentBrush}" 
+                                                                                                    StrokeThickness="0">
+                                                                                                <Ellipse.Effect>
+                                                                                                    <DropShadowEffect ShadowDepth="1" 
+                                                                                                                     BlurRadius="4" 
+                                                                                                                     Opacity="0.3" 
+                                                                                                                     Color="Black"/>
+                                                                                                </Ellipse.Effect>
+                                                                                            </Ellipse>
+                                                                                        </Grid>
+                                                                                    </ControlTemplate>
+                                                                                </Thumb.Template>
+                                                                            </Thumb>
+                                                                        </Track.Thumb>
+                                                                    </Track>
+                                                                </Grid>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Slider.Resources>
+                                        </Slider>
+                                        
+                                        <!-- Scale Labels -->
+                                        <Grid Margin="5,4,5,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <TextBlock Text="75%" 
+                                                     Grid.Column="0" 
+                                                     FontSize="11" 
+                                                     Foreground="{StaticResource TextSecondaryBrush}"/>
+                                            
+                                            <TextBlock Text="150%" 
+                                                     Grid.Column="2" 
+                                                     FontSize="11" 
+                                                     Foreground="{StaticResource TextSecondaryBrush}"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    
+                    <!-- Behavior Section -->
+                    <StackPanel x:Name="BehaviorSection" Visibility="Collapsed" Margin="0,20,0,0">
+                        <Border Style="{StaticResource SettingsCardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Application" Style="{StaticResource SettingsSectionStyle}"/>
+                                
+                                <!-- Start with Windows -->
+                                <Grid Margin="0,16,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Start with Windows" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Launch automatically when your computer starts" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="False"/>
+                                </Grid>
+                                
+                                <!-- Minimize to tray -->
+                                <Grid Margin="0,16,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Minimize to System Tray" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Keep application running in the background when closed" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="True"/>
+                                </Grid>
+                                
+                                <!-- Launch minimized -->
+                                <Grid Margin="0,16,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Start Minimized" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Launch the application in the system tray without showing the window" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="False"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Crosshair Behavior Card -->
+                        <Border Style="{StaticResource SettingsCardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Crosshair" Style="{StaticResource SettingsSectionStyle}"/>
+                                
+                                <!-- Auto-hide -->
+                                <Grid Margin="0,16,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Auto-hide in non-game applications" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Automatically hide the crosshair when not in a game" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="False"/>
+                                </Grid>
+                                
+                                <!-- Game detection mode -->
+                                <TextBlock Text="Game Detection Mode" Style="{StaticResource SettingsOptionStyle}" Margin="0,0,0,8"/>
+                                <TextBlock Text="Select how the application detects games for auto-switching profiles" 
+                                         Style="{StaticResource SettingsDescriptionStyle}" Margin="0,0,0,16"/>
+                                
+                                <ComboBox x:Name="GameDetectionModeComboBox" 
+                                         Style="{StaticResource ModernComboBoxStyle}"
+                                         Width="300"
+                                         HorizontalAlignment="Left">
+                                    <ComboBoxItem Content="Automatic (Recommended)" IsSelected="True"/>
+                                    <ComboBoxItem Content="Process Monitoring"/>
+                                    <ComboBoxItem Content="Window Title Detection"/>
+                                    <ComboBoxItem Content="Manual Selection"/>
+                                </ComboBox>
+                                
+                                <!-- Performance mode -->
+                                <Grid Margin="0,16,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Low-latency Mode" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Prioritize crosshair rendering for minimal delay (increases CPU usage)" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="True"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Hotkeys Card -->
+                        <Border Style="{StaticResource SettingsCardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Hotkeys" Style="{StaticResource SettingsSectionStyle}"/>
+                                
+                                <TextBlock Text="Global shortcuts to control the application" 
+                                         Style="{StaticResource SettingsDescriptionStyle}" Margin="0,4,0,16"/>
+                                
+                                <!-- Toggle visibility hotkey -->
+                                <Grid Margin="0,8,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="Toggle Crosshair Visibility" 
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource SettingsOptionStyle}"/>
+                                    
+                                    <Border Grid.Column="1" 
+                                          BorderThickness="1" 
+                                          BorderBrush="#3A454F" 
+                                          Background="#15FFFFFF"
+                                          CornerRadius="4" 
+                                          Padding="12,8" 
+                                          Width="160">
+                                      <TextBlock Text="Alt + X" 
+                                               HorizontalAlignment="Center" 
+                                               FontFamily="Consolas" 
+                                               FontSize="14"/>
+                                    </Border>
+                                </Grid>
+                                
+                                <!-- Cycle profiles hotkey -->
+                                <Grid Margin="0,8,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="Cycle Through Profiles" 
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource SettingsOptionStyle}"/>
+                                    
+                                    <Border Grid.Column="1" 
+                                          BorderThickness="1" 
+                                          BorderBrush="#3A454F" 
+                                          Background="#15FFFFFF"
+                                          CornerRadius="4" 
+                                          Padding="12,8" 
+                                          Width="160">
+                                      <TextBlock Text="Alt + C" 
+                                               HorizontalAlignment="Center" 
+                                               FontFamily="Consolas" 
+                                               FontSize="14"/>
+                                    </Border>
+                                </Grid>
+                                
+                                <!-- Open settings hotkey -->
+                                <Grid Margin="0,8,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="Open Settings Window" 
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource SettingsOptionStyle}"/>
+                                    
+                                    <Border Grid.Column="1" 
+                                          BorderThickness="1" 
+                                          BorderBrush="#3A454F" 
+                                          Background="#15FFFFFF"
+                                          CornerRadius="4" 
+                                          Padding="12,8" 
+                                          Width="160">
+                                      <TextBlock Text="Alt + S" 
+                                               HorizontalAlignment="Center" 
+                                               FontFamily="Consolas" 
+                                               FontSize="14"/>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    
+                    <!-- Performance Section -->
+                    <StackPanel x:Name="PerformanceSection" Visibility="Collapsed" Margin="0,20,0,0">
+                        <Border Style="{StaticResource SettingsCardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Rendering" Style="{StaticResource SettingsSectionStyle}"/>
+                                
+                                <!-- Hardware Acceleration -->
+                                <Grid Margin="0,16,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Use Hardware Acceleration" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Utilize your GPU for smoother rendering (recommended)" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="True"/>
+                                </Grid>
+                                
+                                <!-- FPS Limiter -->
+                                <Grid Margin="0,16,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Limit Frame Rate" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Reduce CPU usage by limiting maximum FPS" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ComboBox Grid.Column="1" 
+                                             Width="120" 
+                                             SelectedIndex="2" 
+                                             Style="{StaticResource ModernComboBoxStyle}">
+                                        <ComboBoxItem Content="No limit"/>
+                                        <ComboBoxItem Content="60 FPS"/>
+                                        <ComboBoxItem Content="120 FPS"/>
+                                        <ComboBoxItem Content="144 FPS"/>
+                                        <ComboBoxItem Content="240 FPS"/>
+                                    </ComboBox>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    
+                    <!-- Advanced Section -->
+                    <StackPanel x:Name="AdvancedSection" Visibility="Collapsed" Margin="0,20,0,0">
+                        <Border Style="{StaticResource SettingsCardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Developer Options" Style="{StaticResource SettingsSectionStyle}"/>
+                                
+                                <!-- Debug Mode -->
+                                <Grid Margin="0,16,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Debug Mode" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Enable detailed logging and debug information" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="False"/>
+                                </Grid>
+                                
+                                <!-- Data Export -->
+                                <Grid Margin="0,16,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="Export Settings" Style="{StaticResource SettingsOptionStyle}"/>
+                                        <TextBlock Text="Save your current configuration to a file" 
+                                                 Style="{StaticResource SettingsDescriptionStyle}"/>
+                                    </StackPanel>
+                                    
+                                    <Button Grid.Column="1" 
+                                           Content="Export" 
+                                           Style="{StaticResource ModernActionButton}"
+                                           Width="130"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    
+                    <!-- About Section - Modern Redesign -->
+                    <StackPanel x:Name="AboutSection" Visibility="Collapsed" Margin="0,20,0,0">
+                        <!-- App Info Card -->
+                        <Border Style="{StaticResource SettingsCardStyle}">
+                            <StackPanel Margin="20">
+                                <!-- App Header with Logo -->
+                                <StackPanel HorizontalAlignment="Center" Margin="0,10,0,30">
+                                    <!-- App Logo -->
+                                    <Ellipse Width="80" Height="80" Margin="0,0,0,16">
+                                        <Ellipse.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#3498DB" Offset="0"/>
+                                                <GradientStop Color="#2980B9" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Color="Black"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+                                    
+                                    <!-- App Name -->
+                                    <TextBlock Text="PinPoint" 
+                                             FontSize="28" 
+                                             FontWeight="SemiBold" 
+                                             Foreground="White" 
+                                             HorizontalAlignment="Center"/>
+                                    
+                                    <!-- App Tagline -->
+                                    <TextBlock Text="Professional Crosshair Overlay" 
+                                             FontSize="16" 
+                                             Foreground="#B9C3CD" 
+                                             HorizontalAlignment="Center" 
+                                             Margin="0,4,0,0"/>
+                                </StackPanel>
+                                
+                                <!-- Version Info Panel -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <!-- Version Info -->
+                                    <Border Grid.Column="0" 
+                                          Background="#15FFFFFF" 
+                                          CornerRadius="8" 
+                                          Margin="0,0,10,0" 
+                                          Padding="20">
+                                        <StackPanel>
+                                            <TextBlock Text="APPLICATION INFO" 
+                                                     FontSize="12" 
+                                                     FontWeight="SemiBold" 
+                                                     Foreground="#8A99A8"
+                                                     Margin="0,0,0,16"/>
+                                            
+                                            <Grid Margin="0,4,0,4">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="Version" Foreground="#8A99A8"/>
+                                                <TextBlock Grid.Column="1" Text="1.0.0" Foreground="White" FontWeight="Medium"/>
+                                            </Grid>
+                                            
+                                            <Grid Margin="0,4,0,4">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="Build" Foreground="#8A99A8"/>
+                                                <TextBlock Grid.Column="1" Text="2023.05.15" Foreground="White" FontWeight="Medium"/>
+                                            </Grid>
+                                            
+                                            <Grid Margin="0,4,0,4">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="Framework" Foreground="#8A99A8"/>
+                                                <TextBlock Grid.Column="1" Text=".NET Framework 4.8" Foreground="White" FontWeight="Medium"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+                                    
+                                    <!-- Team/Contact Info -->
+                                    <Border Grid.Column="1" 
+                                          Background="#15FFFFFF" 
+                                          CornerRadius="8" 
+                                          Margin="10,0,0,0" 
+                                          Padding="20">
+                                        <StackPanel>
+                                            <TextBlock Text="TEAM" 
+                                                     FontSize="12" 
+                                                     FontWeight="SemiBold" 
+                                                     Foreground="#8A99A8"
+                                                     Margin="0,0,0,16"/>
+                                            
+                                            <TextBlock Text="© 2023 PinPoint Team" 
+                                                     Foreground="White" 
+                                                     FontWeight="Medium"
+                                                     Margin="0,4,0,8"/>
+                                            
+                                            <TextBlock Text="All rights reserved" 
+                                                     Foreground="#8A99A8"
+                                                     Margin="0,0,0,16"/>
+                                            
+                                            <TextBlock>
+                                                <Hyperlink 
+                                                    NavigateUri="mailto:support@pinpoint.com" 
+                                                    RequestNavigate="Hyperlink_RequestNavigate"
+                                                    Foreground="#3498DB">
+                                                    <TextBlock Text="support@pinpoint.com" 
+                                                             Foreground="#3498DB"/>
+                                                </Hyperlink>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Links Section -->
+                        <Border Style="{StaticResource SettingsCardStyle}" Margin="0,16,0,0">
+                            <StackPanel Margin="20">
+                                <TextBlock Text="Links &amp; Resources" 
+                                         FontSize="18" 
+                                         FontWeight="SemiBold" 
+                                         Margin="0,0,0,16"/>
+                                         
+                                <!-- Social Buttons -->
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <!-- Website Button -->
+                                    <Border Grid.Column="0" 
+                                          Background="#252E38" 
+                                          CornerRadius="8" 
+                                          Margin="5" 
+                                          Cursor="Hand">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.2" Color="Black"/>
+                                        </Border.Effect>
+                                        <Button Content="Website" 
+                                               Background="Transparent"
+                                               BorderThickness="0" 
+                                               Foreground="White"
+                                               FontWeight="Medium"
+                                               FontSize="13"
+                                               Click="ResourceLink_Click" 
+                                               Tag="https://pinpoint.com"
+                                               Cursor="Hand"
+                                               Height="45"
+                                               HorizontalContentAlignment="Center"
+                                               VerticalContentAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <!-- Documentation Button -->
+                                    <Border Grid.Column="1" 
+                                          Background="#252E38" 
+                                          CornerRadius="8" 
+                                          Margin="5" 
+                                          Cursor="Hand">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.2" Color="Black"/>
+                                        </Border.Effect>
+                                        <Button Content="Documentation" 
+                                               Background="Transparent"
+                                               BorderThickness="0" 
+                                               Foreground="White"
+                                               FontWeight="Medium"
+                                               FontSize="13"
+                                               Click="ResourceLink_Click" 
+                                               Tag="https://docs.pinpoint.com"
+                                               Cursor="Hand"
+                                               Height="45"
+                                               HorizontalContentAlignment="Center"
+                                               VerticalContentAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <!-- Support Button -->
+                                    <Border Grid.Column="2" 
+                                          Background="#252E38" 
+                                          CornerRadius="8" 
+                                          Margin="5" 
+                                          Cursor="Hand">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.2" Color="Black"/>
+                                        </Border.Effect>
+                                        <Button Content="Support" 
+                                               Background="Transparent"
+                                               BorderThickness="0" 
+                                               Foreground="White"
+                                               FontWeight="Medium"
+                                               FontSize="13"
+                                               Click="ResourceLink_Click" 
+                                               Tag="https://support.pinpoint.com"
+                                               Cursor="Hand"
+                                               Height="45"
+                                               HorizontalContentAlignment="Center"
+                                               VerticalContentAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                                
+                                <!-- Social Links Row -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                                    <Button Content="Discord" 
+                                           Width="90" 
+                                           Height="32" 
+                                           Margin="5,0" 
+                                           Background="#5865F2" 
+                                           Foreground="White" 
+                                           BorderThickness="0"
+                                           Click="ResourceLink_Click" 
+                                           Tag="https://discord.gg/pinpoint"
+                                           Cursor="Hand">
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="16"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    
+                                    <Button Content="Twitter" 
+                                           Width="90" 
+                                           Height="32" 
+                                           Margin="5,0" 
+                                           Background="#1DA1F2" 
+                                           Foreground="White" 
+                                           BorderThickness="0"
+                                           Click="ResourceLink_Click" 
+                                           Tag="https://twitter.com/pinpoint"
+                                           Cursor="Hand">
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="16"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    
+                                    <Button Content="GitHub" 
+                                           Width="90" 
+                                           Height="32" 
+                                           Margin="5,0" 
+                                           Background="#333333" 
+                                           Foreground="White" 
+                                           BorderThickness="0"
+                                           Click="ResourceLink_Click" 
+                                           Tag="https://github.com/pinpoint"
+                                           Cursor="Hand">
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="16"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>
